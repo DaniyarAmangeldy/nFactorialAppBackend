@@ -27,7 +27,7 @@ data class Store(
     val id: String,
     val name: String,
     val rating: Rating,
-    val products: List<Product>
+    val products: List<Product> = emptyList(),
 )
 
 @Serializable
@@ -53,7 +53,7 @@ data class ProfileUpdateRequest(
 data class Collection(
     val id: String,
     val name: String,
-    val stores: List<StoreLight>
+    val products: List<Product>
 )
 
 @Serializable
@@ -66,11 +66,14 @@ data class StoreCollection(
 @Serializable
 data class Banner(
     val id: String,
-    val image: String
+    val image: String,
+    val title: String,
+    val description: String,
 )
 
 @Serializable
 data class Filter(
+    val id: String,
     val name: String
 )
 

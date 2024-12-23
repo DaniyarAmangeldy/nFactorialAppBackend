@@ -1,40 +1,60 @@
 package com.example.data
 
 import com.example.models.*
+import com.example.models.Collection
 
 object MockData {
     private val profile = Profile(
-        name = "John Doe",
-        size = "L"
-    )
-
-    private val products = listOf(
-        Product(
-            id = "1",
-            name = "T-Shirt",
-            price = Price(29.99, "USD"),
-            image = "https://example.com/tshirt.jpg"
-        ),
-        Product(
-            id = "2",
-            name = "Jeans",
-            price = Price(59.99, "USD"),
-            image = "https://example.com/jeans.jpg"
-        )
+        name = "Daniyar Amangeldi",
+        size = "37"
     )
 
     private val stores = listOf(
         Store(
+            id = "0",
+            name = "Lamoda",
+            rating = Rating(4.7, 2300),
+        ),
+        Store(
             id = "1",
-            name = "Fashion Store",
-            rating = Rating(4.5, 100),
-            products = products
+            name = "Zara",
+            rating = Rating(4.4, 21200),
+            products = listOf(
+                Product(
+                    name = "Founds",
+                    id = "1",
+                    image = "https://a.lmcdn.ru/img600x866/R/T/RTLADJ687001_23960304_1_v1.jpg",
+                    price = Price(45.0, "$"),
+                ),
+                Product(
+                    name = "Demix",
+                    id = "2",
+                    image = "https://a.lmcdn.ru/img600x866/M/P/MP002XW179AI_24114653_1_v1.jpg",
+                    price = Price(40.0, "$"),
+                ),
+                Product(
+                    name = "Dino Ricci",
+                    id = "3",
+                    image = "https://a.lmcdn.ru/img600x866/M/P/MP002XW0OS4H_22090309_1_v1.jpg",
+                    price = Price(38.0, "$"),
+                ),
+                Product(
+                    name = "Adidas Originals",
+                    id = "4",
+                    image = "https://a.lmcdn.ru/img600x866/R/T/RTLACY244704_24361911_1_v3.jpg",
+                    price = Price(100.0, "$"),
+                ),
+            )
         ),
         Store(
             id = "2",
-            name = "Trendy Shop",
-            rating = Rating(4.8, 150),
-            products = products
+            name = "Intertop",
+            rating = Rating(3.4, 500),
+        ),
+        Store(
+            id = "3",
+            name = "Adidas",
+            rating = Rating(5.0, 23000),
         )
     )
 
@@ -48,14 +68,54 @@ object MockData {
 
     val homeComponent = HomeComponent(
         filters = listOf(
-            Filter("New"),
-            Filter("Popular"),
-            Filter("Sale")
+            Filter("1", "Sandals"),
+            Filter("2","Heels"),
+            Filter("3","Shoes"),
+            Filter("4","Slippers"),
+            Filter("5","Boots"),
+            Filter("6","Sneakers"),
+            Filter("7","Loafers"),
+            Filter("8","Oxfords"),
+            Filter("9","Moccasins"),
+            Filter("10","Flip-flops"),
         ),
-        banner = Banner("1", "https://example.com/banner.jpg"),
+        banner = Banner(
+            "1",
+            "https://i.pinimg.com/originals/57/e1/e6/57e1e681dbe970538c627164b301a540.jpg",
+            title = "It's Time for\nPayday Sale!",
+            description = "Up to 70% off!",
+        ),
         collections = listOf(
-            Collection("1", "Summer Collection", storeLights),
-            Collection("2", "Winter Collection", storeLights)
+            Collection(
+                id = "1",
+                name = "Trending Products",
+                products = listOf(
+                    Product(
+                        name = "Founds",
+                        id = "1",
+                        image = "https://a.lmcdn.ru/img600x866/R/T/RTLADJ687001_23960304_1_v1.jpg",
+                        price = Price(45.0, "$"),
+                    ),
+                    Product(
+                        name = "Demix",
+                        id = "2",
+                        image = "https://a.lmcdn.ru/img600x866/M/P/MP002XW179AI_24114653_1_v1.jpg",
+                        price = Price(40.0, "$"),
+                    ),
+                    Product(
+                        name = "Dino Ricci",
+                        id = "3",
+                        image = "https://a.lmcdn.ru/img600x866/M/P/MP002XW0OS4H_22090309_1_v1.jpg",
+                        price = Price(38.0, "$"),
+                    ),
+                    Product(
+                        name = "Adidas Originals",
+                        id = "4",
+                        image = "https://a.lmcdn.ru/img600x866/R/T/RTLACY244704_24361911_1_v3.jpg",
+                        price = Price(100.0, "$"),
+                    )
+                ),
+            )
         ),
         storeCollections = listOf(
             StoreCollection("1", "Featured Stores", stores),
