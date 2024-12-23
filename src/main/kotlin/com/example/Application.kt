@@ -1,4 +1,4 @@
-package org.example
+package org.example.com.example
 
 import com.example.data.MockData
 import com.example.models.ProfileUpdateRequest
