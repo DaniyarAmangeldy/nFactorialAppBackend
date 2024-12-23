@@ -13,7 +13,7 @@ repositories {
 }
 
 application {
-    mainClass.set("com.example.ApplicationKt") // Указываем главный класс
+    mainClass.set("com.example.Application") // Указываем главный класс
 }
 
 dependencies {
