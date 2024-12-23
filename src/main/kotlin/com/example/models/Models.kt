@@ -27,6 +27,7 @@ data class Store(
     val id: String,
     val name: String,
     val rating: Rating,
+    val image: String,
     val products: List<Product> = emptyList(),
 )
 

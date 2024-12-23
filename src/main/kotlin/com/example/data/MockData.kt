@@ -13,11 +13,13 @@ object MockData {
         Store(
             id = "0",
             name = "Lamoda",
+            image = "https://wbcon.ru/wp-content/uploads/2021/09/lamoda-1.png",
             rating = Rating(4.7, 2300),
         ),
         Store(
             id = "1",
             name = "Zara",
+            image = "https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_750,h_400/https://assets.designhill.com/design-blog/wp-content/uploads/2019/01/1-6.jpg",
             rating = Rating(4.4, 21200),
             products = listOf(
                 Product(
@@ -49,11 +51,13 @@ object MockData {
         Store(
             id = "2",
             name = "Intertop",
+            image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdb5pD0n1FyyVnmbpwIVIXIRNVAZXF0-e6_A&s",
             rating = Rating(3.4, 500),
         ),
         Store(
             id = "3",
             name = "Adidas",
+            image = "https://adidas.kz/og-image.jpg",
             rating = Rating(5.0, 23000),
         )
     )
