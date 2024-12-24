@@ -49,7 +49,7 @@ fun Application.module() {
                 return@get
             }
             val products = MockData.products.filter { product ->
-                product.name.contains(query)
+                product.name.contains(query, ignoreCase = true)
             }
             call.respond(Products(products))
         }
