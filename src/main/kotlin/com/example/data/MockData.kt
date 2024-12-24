@@ -70,6 +70,87 @@ object MockData {
         )
     }
 
+    val products = listOf(
+        Product(
+            name = "Founds",
+            id = "1",
+            image = "https://a.lmcdn.ru/img600x866/R/T/RTLADJ687001_23960304_1_v1.jpg",
+            price = Price(45.0, "$"),
+        ),
+        Product(
+            name = "Demix",
+            id = "2",
+            image = "https://a.lmcdn.ru/img600x866/M/P/MP002XW179AI_24114653_1_v1.jpg",
+            price = Price(40.0, "$"),
+        ),
+        Product(
+            name = "Dino Ricci",
+            id = "3",
+            image = "https://a.lmcdn.ru/img600x866/M/P/MP002XW0OS4H_22090309_1_v1.jpg",
+            price = Price(38.0, "$"),
+        ),
+        Product(
+            name = "Adidas Originals",
+            id = "4",
+            image = "https://a.lmcdn.ru/img600x866/R/T/RTLACY244704_24361911_1_v3.jpg",
+            price = Price(100.0, "$"),
+        ),
+        Product(
+            name = "Nike Air Max 270",
+            id = "2",
+            image = "https://a.lmcdn.ru/img600x866/R/T/RTLACK622102_22146811_1_v1.jpg",
+            price = Price(159.99, "$"),
+        ),
+        Product(
+            name = "Puma RS-X",
+            id = "3",
+            image = "https://a.lmcdn.ru/img600x866/R/T/RTLADS751601_24544065_1_v1.jpg",
+            price = Price(89.99, "$"),
+        ),
+        Product(
+            name = "New Balance 574",
+            id = "4",
+            image = "https://a.lmcdn.ru/img600x866/R/T/RTLADS515601_25134589_1_v1.jpg",
+            price = Price(79.99, "$"),
+        ),
+        Product(
+            name = "Reebok Classic Leather",
+            id = "5",
+            image = "https://a.lmcdn.ru/img600x866/R/T/RTLABK223802_20469174_1_v1.jpg",
+            price = Price(69.99, "$"),
+        ),
+        Product(
+            name = "Converse Chuck Taylor",
+            id = "6",
+            image = "https://a.lmcdn.ru/img600x866/R/T/RTLADK151401_23119879_1_v1.jpg",
+            price = Price(55.99, "$"),
+        ),
+        Product(
+            name = "Vans Old Skool",
+            id = "7",
+            image = "https://a.lmcdn.ru/img600x866/R/T/RTLADX503901_25406703_1_v1.jpg",
+            price = Price(65.99, "$"),
+        ),
+        Product(
+            name = "ASICS Gel-Lyte III",
+            id = "8",
+            image = "https://a.lmcdn.ru/img600x866/R/T/RTLADD286501_22027301_1_v1.jpg",
+            price = Price(95.99, "$"),
+        ),
+        Product(
+            name = "Under Armour HOVR",
+            id = "9",
+            image = "https://a.lmcdn.ru/img600x866/R/T/RTLADP440201_24013966_1_v1.jpg",
+            price = Price(119.99, "$"),
+        ),
+        Product(
+            name = "Jordan Air 1 Mid",
+            id = "10",
+            image = "https://a.lmcdn.ru/img600x866/R/T/RTLADY974401_25887319_1_v1_2x.jpg",
+            price = Price(189.99, "$"),
+        )
+    )
+
     val homeComponent = HomeComponent(
         filters = listOf(
             Filter("1", "Sandals"),
