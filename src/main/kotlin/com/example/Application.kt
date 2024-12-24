@@ -1,6 +1,7 @@
 package com.example
 
 import com.example.data.MockData
+import com.example.models.Products
 import com.example.models.ProfileUpdateRequest
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
@@ -44,13 +45,13 @@ fun Application.module() {
         get("/products") {
             val query = call.request.queryParameters.get("query")
             if (query == null) {
-                call.respond(MockData.products)
+                call.respond(Products(MockData.products))
                 return@get
             }
             val products = MockData.products.filter { product ->
                 product.name.contains(query)
             }
-            call.respond(products)
+            call.respond(Products(products))
         }
 
         post("/profile") {

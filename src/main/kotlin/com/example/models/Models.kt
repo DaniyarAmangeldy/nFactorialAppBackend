@@ -17,6 +17,11 @@ data class Product(
 )
 
 @Serializable
+data class Products(
+    val products: List<Product>,
+)
+
+@Serializable
 data class Rating(
     val average: Double,
     val count: Int
