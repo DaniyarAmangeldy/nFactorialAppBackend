@@ -1,14 +1,17 @@
 package com.example
 
 import com.example.data.MockData
-import com.example.models.Products
-import com.example.models.ProfileUpdateRequest
+import com.example.models.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.plugins.swagger.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -22,8 +25,24 @@ fun Application.module() {
     install(ContentNegotiation) {
         json()
     }
+    install(CORS) {
+        anyHost()
+        allowHeader(HttpHeaders.ContentType)
+    }
+
+    install(Authentication) {
+        jwt("auth-jwt") {
+            verifier(JwtConfig.verifier)
+            validate { credential ->
+                if (credential.payload.getClaim("login").asString().isNotEmpty()) {
+                    JWTPrincipal(credential.payload)
+                } else null
+            }
+        }
+    }
 
     routing {
+        swaggerUI(path = "docs", swaggerFile = "openapi/documentation.yaml")
         get("/home") {
             call.respond(MockData.homeComponent)
         }
@@ -58,6 +77,85 @@ fun Application.module() {
             val request = call.receive<ProfileUpdateRequest>()
             MockData.updateProfile(request.name, request.size)
             call.respond(MockData.getProfile())
+        }
+
+        post("/auth/register") {
+            val credentials = call.receive<UserCredentials>()
+            val token = JwtConfig.generateToken(credentials.login)
+            call.respond(mapOf("token" to token))
+        }
+
+        post("/auth/login") {
+            val credentials = call.receive<UserCredentials>()
+            val token = JwtConfig.generateToken(credentials.login)
+            call.respond(mapOf("token" to token))
+        }
+
+        authenticate("auth-jwt") {
+            get("/auth/validate") {
+                val principal = call.principal<JWTPrincipal>()
+                val login = principal?.payload?.getClaim("login")?.asString()
+                call.respond(mapOf("message" to "Valid token", "login" to login))
+            }
+        }
+
+        authenticate("auth-jwt") {
+            get("/home") {
+                val tagFilter = call.request.queryParameters["tag"]
+                val filteredCourses = tagFilter?.let { tag -> courses.filter { it.tags.contains(tag) } } ?: courses
+                call.respond(
+                    mapOf(
+                        "banners" to banners,
+                        "courses" to filteredCourses,
+                        "tags" to tags,
+                    )
+                )
+            }
+        }
+
+        authenticate("auth-jwt") {
+            get("/catalog") {
+                val tagFilter = call.request.queryParameters["tag"]
+                val filteredCourses = tagFilter?.let { tag -> courses.filter { it.tags.contains(tag) } } ?: courses
+                call.respond(
+                    mapOf(
+                        "courses" to filteredCourses,
+                        "tags" to tags,
+                    )
+                )
+            }
+        }
+
+        authenticate("auth-jwt") {
+            get("/feedback") {
+                call.respond(
+                    mapOf("feedbacks" to testimonials)
+                )
+            }
+        }
+
+        authenticate("auth-jwt") {
+            get("/news") {
+                val tagFilter = call.request.queryParameters["tag"]
+                val filteredNews = tagFilter?.let { tag -> newsList.filter { it.tags.contains(tag) } } ?: newsList
+                call.respond(
+                    mapOf(
+                        "news" to filteredNews,
+                        "tags" to newsTags,
+                    )
+                )
+            }
+        }
+
+        authenticate("auth-jwt") {
+            post("/consultation") {
+                val request = call.receive<ConsultationRequest>()
+                if (request.name.isBlank() || request.email.isBlank() || request.phone.isBlank()) {
+                    call.respond(HttpStatusCode.BadRequest, "Все поля должны быть заполнены")
+                } else {
+                    call.respond(HttpStatusCode.OK, "Заявка принята")
+                }
+            }
         }
     }
 }
