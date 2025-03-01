@@ -23,6 +23,8 @@ fun main() {
     embeddedServer(Netty, port = port) { module() }.start(wait = true)
 }
 
+val userDatabase = mutableMapOf<String, String>() // login -> password
+
 fun Application.module() {
     install(ContentNegotiation) {
         json()
@@ -84,14 +86,30 @@ fun Application.module() {
 
         post("/auth/register") {
             val credentials = call.receive<UserCredentials>()
-            val token = JwtConfig.generateToken(credentials.login)
-            call.respond(mapOf("token" to token))
+            if (credentials.password.length < 6) {
+                call.respond(HttpStatusCode.BadRequest, "Password is too short")
+            }
+            if (userDatabase.containsKey(credentials.login)) {
+                call.respond(HttpStatusCode.Conflict, "User already exists")
+            } else {
+                userDatabase[credentials.login] = credentials.password
+                val token = JwtConfig.generateToken(credentials.login)
+                call.respond(mapOf("token" to token))
+            }
         }
 
         post("/auth/login") {
             val credentials = call.receive<UserCredentials>()
-            val token = JwtConfig.generateToken(credentials.login)
-            call.respond(mapOf("token" to token))
+            if (credentials.password.length < 6) {
+                call.respond(HttpStatusCode.BadRequest, "Password is too short")
+            }
+            val storedPassword = userDatabase[credentials.login]
+            if (storedPassword == credentials.password) {
+                val token = JwtConfig.generateToken(credentials.login)
+                call.respond(mapOf("token" to token))
+            } else {
+                call.respond(HttpStatusCode.Unauthorized, "Invalid credentials")
+            }
         }
 
         authenticate("auth-jwt") {
@@ -106,13 +124,7 @@ fun Application.module() {
             get("/main") {
                 val tagFilter = call.request.queryParameters["tag"]
                 val filteredCourses = tagFilter?.let { tag -> courses.filter { it.tags.contains(tag) } } ?: courses
-                call.respond(
-                    mapOf(
-                        "banners" to banners,
-                        "courses" to filteredCourses,
-                        "tags" to tags,
-                    )
-                )
+                call.respond(MainResponse(banners, filteredCourses, tags))
             }
         }
 
@@ -120,12 +132,7 @@ fun Application.module() {
             get("/catalog") {
                 val tagFilter = call.request.queryParameters["tag"]
                 val filteredCourses = tagFilter?.let { tag -> courses.filter { it.tags.contains(tag) } } ?: courses
-                call.respond(
-                    mapOf(
-                        "courses" to filteredCourses,
-                        "tags" to tags,
-                    )
-                )
+                call.respond(CatalogResponse(filteredCourses, tags))
             }
         }
 
@@ -141,12 +148,7 @@ fun Application.module() {
             get("/news") {
                 val tagFilter = call.request.queryParameters["tag"]
                 val filteredNews = tagFilter?.let { tag -> newsList.filter { it.tags.contains(tag) } } ?: newsList
-                call.respond(
-                    mapOf(
-                        "news" to filteredNews,
-                        "tags" to newsTags,
-                    )
-                )
+                call.respond(NewsResponse(filteredNews, newsTags))
             }
         }
 

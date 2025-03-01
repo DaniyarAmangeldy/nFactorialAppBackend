@@ -80,8 +80,18 @@ paths:
               schema:
                 type: object
                 properties:
-                  message:
-                    type: string
+                  banners:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/StoreBanner"
+                  courses:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Course"
+                  tags:
+                    type: array
+                    items:
+                      type: string
         "401":
           description: "Неавторизованный доступ"
 
@@ -156,6 +166,8 @@ paths:
   /consultation:
     post:
       summary: "Запрос консультации"
+      security:
+        - BearerAuth: [ ]
       requestBody:
         required: true
         content:
@@ -188,14 +200,25 @@ components:
         description:
           type: string
         price:
-          type: string
+          type: number
+          format: double
         duration:
+          type: string
+        courseDetails:
           type: string
         tags:
           type: array
           items:
             type: string
         imageUrl:
+          type: string
+
+    StoreBanner:
+      type: object
+      properties:
+        imageUrl:
+          type: string
+        text:
           type: string
 
     ConsultationRequest:

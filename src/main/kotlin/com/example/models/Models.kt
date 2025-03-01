@@ -285,6 +285,25 @@ val courses = listOf(
     )
 )
 
+@Serializable
+class MainResponse(
+    val banners: List<StoreBanner>,
+    val courses: List<Course>,
+    val tags: List<String>,
+)
+
+@Serializable
+class CatalogResponse(
+    val courses: List<Course>,
+    val tags: List<String>,
+)
+
+@Serializable
+class NewsResponse(
+    val news: List<News>,
+    val tags: List<String>,
+)
+
 val banners = listOf(
     StoreBanner("https://i.postimg.cc/k56MgVcH/IMG-4348-1-1.png", "2500+ выпускников в топовых IT компаниях"),
     StoreBanner("https://i.postimg.cc/vZSHy7W9/Group-5.png", "Существуем на рынке с 2013 года"),
