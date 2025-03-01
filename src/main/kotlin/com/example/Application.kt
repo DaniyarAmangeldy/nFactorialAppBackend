@@ -11,6 +11,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.plugins.openapi.*
 import io.ktor.server.plugins.swagger.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -42,7 +43,8 @@ fun Application.module() {
     }
 
     routing {
-        swaggerUI(path = "docs", swaggerFile = "openapi/documentation.yaml")
+        openAPI(path = "/openapi")
+        swaggerUI(path = "docs", swaggerFile = "/openapi.json")
         get("/home") {
             call.respond(MockData.homeComponent)
         }
