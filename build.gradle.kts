@@ -1,8 +1,8 @@
 plugins {
-    kotlin("jvm") version "1.9.0"
-    kotlin("plugin.serialization") version "1.9.0"
+    kotlin("jvm") version "2.1.10"
+    kotlin("plugin.serialization") version "2.1.10"
     application
-    id("io.ktor.plugin") version "2.3.3"
+    id("io.ktor.plugin") version "3.1.1"
 }
 
 group = "com.example"
@@ -17,16 +17,16 @@ application {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-server-core:2.3.3")
-    implementation("io.ktor:ktor-server-auth-jwt:2.3.3")
-    implementation("io.ktor:ktor-server-netty:2.3.3")
-    implementation("io.ktor:ktor-server-swagger:2.3.3")
-    implementation("io.ktor:ktor-server-cors:2.3.3")
-    implementation("io.ktor:ktor-server-openapi:2.3.3")
+    implementation("io.ktor:ktor-server-core:3.1.1")
+    implementation("io.ktor:ktor-server-auth-jwt:3.1.1")
+    implementation("io.ktor:ktor-server-netty:3.1.1")
+    implementation("io.ktor:ktor-server-swagger:3.1.1")
+    implementation("io.ktor:ktor-server-cors:3.1.1")
+    implementation("io.ktor:ktor-server-openapi:3.1.1")
     implementation("io.github.smiley4:ktor-swagger-ui:5.0.0-beta.2")
     implementation("io.github.smiley4:ktor-openapi:5.0.0-beta.2")
-    implementation("io.ktor:ktor-server-content-negotiation:2.3.3")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.3")
+    implementation("io.ktor:ktor-server-content-negotiation:3.1.1")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.1")
     implementation("ch.qos.logback:logback-classic:1.4.11")
 }
 

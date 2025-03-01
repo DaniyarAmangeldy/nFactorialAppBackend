@@ -1,0 +1,215 @@
+openapi: 3.0.0
+info:
+  title: "Ktor API"
+  description: "API для аутентификации, работы с курсами, отзывами, новостями и заявками на консультации."
+  version: "1.0.0"
+
+paths:
+  /auth/register:
+    post:
+      summary: "Регистрация пользователя"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCredentials"
+      responses:
+        "200":
+          description: "Токен успешно создан"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        "400":
+          description: "Ошибка валидации"
+
+  /auth/login:
+    post:
+      summary: "Авторизация пользователя"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCredentials"
+      responses:
+        "200":
+          description: "Токен успешно выдан"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        "401":
+          description: "Неверные учетные данные"
+
+  /auth/validate:
+    get:
+      summary: "Проверка валидности токена"
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: "Токен валиден"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "401":
+          description: "Токен невалиден или отсутствует"
+
+  /home:
+    get:
+      summary: "Домашняя страница"
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: "Данные главной страницы"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "401":
+          description: "Неавторизованный доступ"
+
+  /catalog:
+    get:
+      summary: "Каталог курсов"
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: "Список доступных курсов"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  courses:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Course"
+                  tags:
+                    type: array
+                    items:
+                      type: string
+        "401":
+          description: "Неавторизованный доступ"
+
+  /feedback:
+    get:
+      summary: "Отзывы пользователей"
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: "Список отзывов"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  feedbacks:
+                    type: array
+                    items:
+                      type: object
+        "401":
+          description: "Неавторизованный доступ"
+
+  /news:
+    get:
+      summary: "Новости"
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: "Список новостей"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  news:
+                    type: array
+                    items:
+                      type: object
+                  tags:
+                    type: array
+                    items:
+                      type: string
+        "401":
+          description: "Неавторизованный доступ"
+
+  /consultation:
+    post:
+      summary: "Запрос консультации"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConsultationRequest"
+      responses:
+        "200":
+          description: "Заявка принята"
+        "400":
+          description: "Некорректные данные"
+
+components:
+  schemas:
+    UserCredentials:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+
+    Course:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: string
+        duration:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        imageUrl:
+          type: string
+
+    ConsultationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
