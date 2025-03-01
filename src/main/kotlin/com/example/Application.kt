@@ -2,6 +2,8 @@ package com.example
 
 import com.example.data.MockData
 import com.example.models.*
+import io.github.smiley4.ktoropenapi.OpenApi
+import io.github.smiley4.ktoropenapi.openApi
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -30,6 +32,7 @@ fun Application.module() {
         anyHost()
         allowHeader(HttpHeaders.ContentType)
     }
+    install(OpenApi)
 
     install(Authentication) {
         jwt("auth-jwt") {
@@ -43,8 +46,12 @@ fun Application.module() {
     }
 
     routing {
-        openAPI(path = "/openapi")
-        swaggerUI(path = "docs", swaggerFile = "/openapi.json")
+        route("/api.json") {
+            openApi()
+        }
+        route("/swagger") {
+            swaggerUI("/api.json")
+        }
         get("/home") {
             call.respond(MockData.homeComponent)
         }

@@ -23,6 +23,8 @@ dependencies {
     implementation("io.ktor:ktor-server-swagger:2.3.3")
     implementation("io.ktor:ktor-server-cors:2.3.3")
     implementation("io.ktor:ktor-server-openapi:2.3.3")
+    implementation("io.github.smiley4:ktor-swagger-ui:5.0.0-beta.2")
+    implementation("io.github.smiley4:ktor-openapi:5.0.0-beta.2")
     implementation("io.ktor:ktor-server-content-negotiation:2.3.3")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.3")
     implementation("ch.qos.logback:logback-classic:1.4.11")
