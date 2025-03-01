@@ -103,7 +103,7 @@ fun Application.module() {
         }
 
         authenticate("auth-jwt") {
-            get("/home") {
+            get("/main") {
                 val tagFilter = call.request.queryParameters["tag"]
                 val filteredCourses = tagFilter?.let { tag -> courses.filter { it.tags.contains(tag) } } ?: courses
                 call.respond(

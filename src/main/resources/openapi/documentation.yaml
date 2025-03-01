@@ -67,7 +67,7 @@ paths:
         "401":
           description: "Токен невалиден или отсутствует"
 
-  /home:
+  /main:
     get:
       summary: "Домашняя страница"
       security:
